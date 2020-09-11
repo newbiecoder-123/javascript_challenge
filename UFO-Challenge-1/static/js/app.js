@@ -1,36 +1,44 @@
 // From data.js
 var tableData = data;
 
-// Variable Declaration
-var tbody = d3.select("tbody");
+// We declare the variable by using let function
+// Select the table body
+let tbody = d3.select("tbody"); 
 
-// Create a function to fill the table with data
-function populateTable(tableData){
-    // Loop through each object in the array
-    data.forEach((dataRow) => { // use forEach function to loop through each object in the array
-        var row = tbody.append("tr"); // add rows to the table 
-        Object.values(dataRow).forEach((val) => {  // use forEach function to loop through each object in the array and find key-value pairs
-            var cell = row.append("td"); // add cells to the table
+// Create a function to fill in the data
+function populateDate(data){
+    // Start By Clearing Existing Data
+    tbody.html("");
+    // Use forEach function to iterate through EACH object in the array
+    data.forEach((dataRow) => {
+        // Add rows to the table
+        let row = tbody.append("tr");
+        // Using D3 object.values and forEach function to iterate and grab values and insert into our new rows
+        Object.values(dataRow).forEach((val) => {
+            let cell = row.append("td");
             cell.text(val);
         });
     })
 }
-// Create a filter function
-function filterDate(){
-    // Prevents the Page from Refreshing
+
+// When the filter table button is selected, then this function is invoked
+function buttonFilter(){
+    // This prevents the page from refreshing
     d3.event.preventDefault();
-    var date = d3.select("#datetime").property("value");
-    var filteredData = tableData;
+    // Obtain the values
+    let date = d3.select("#datetime").property("value");
+    let filterData = tableData;
 
-    // Create a check for date
+    // Data check for the date
     if(date) {
-        // Use a filter to provide a check for the date
-        filteredData = filteredData.filter((row) => row.datetime === date);
+        // Filter the data to match what we are looking for
+        filterData = filterData.filter((row) => row.datetime === date);
     }
-    // Populate the table with the filtered data
-    populateTable(filterData);
+    // Build Table with Filtered Data
+    populateDate(filterData);
 }
-// Handler function activated
-d3.selectAll("#filter-btn").on("click", filterDate);
+// Event handler function that is being invoked
+d3.selectAll("#filter-btn").on("click", buttonFilter);
 
-populateTable(tableData)
+// Call the function to fill in the data
+populateDate(tableData);
