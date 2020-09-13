@@ -7,7 +7,7 @@ var tbody = d3.select("tbody");
 
 // Create a function to fill in the data
 function populateDate(data){
-    // Start By Clearing Existing Data
+    // Make sure table is empty
     tbody.html("");
     // Use forEach function to iterate through EACH object in the array
     data.forEach((dataRow) => {
